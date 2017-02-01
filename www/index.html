@@ -4,70 +4,96 @@
 <head>
 	<meta charset="utf-8">
 	
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/my-css.css">
-	<link rel="stylesheet" type="text/css" href="css/on-off-switch.css">
+	<title>FRC 3223</title>
 </head>
 
 <body>
-	<script src="js/bootstrap.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	
-	<ul id="tabs" class="nav nav-tabs" role="tablist">
-		<li role="presentation">
-			<a href="#teleop">Teleop</a>
-		</li>
-		<li role="presentation">
-			<a href="#sensors">Sensors</a>
-		</li>
-	</ul>
+	<div class="container-fluid">
+		<!-- tabs -->
+		<ul class="nav nav-tabs" data-tabs="tabs">
+			<li class="active">
+				<a data-toggle="tab" href="#teleop">Teleop</a>
+			</li>
+			<li>
+				<a data-toggle="tab" href="#params">Parameters</a>
+			</li>
+			<li>
+				<a data-toggle="tab" href="#controls">Controls</a>
+			</li>
+		</ul>
 	
-	<div class="tab-content">
-	
-		<!-- Teleop tab -->
-		<div role="tabpanel" class="tab-pane active" id="teleop">
-			<div class="container-fluid text-center">
-				<div class="row">
-					<!-- TODO: update to reflect which controller is currently controlling robot -->
-					<p id="driver-text">Driver <span id="driver-number">1</span> in control</p>
-				</div>
-				<div class="row">
-					<div class="col-sm-6">
-						<img class="camera-img" src="img/placeholder.png" />
+		<div class="tab-content">
+			<!-- Teleop tab -->
+			<div id="teleop" class="tab-pane active">
+				<div class="container-fluid text-center">
+					<div class="row">
+						<!-- TODO: update span to reflect which controller is currently controlling robot -->
+						<p id="driver-text">Driver <span id="active-driver-number">1</span> in control</p>
 					</div>
-					<div class="col-sm-6">
-						<img class="camera-img"src="img/placeholder.png" />
+					<div class="row">
+						<div class="col-sm-6">
+							<img class="camera-img" src="img/placeholder.png" />
+						</div>
+						<div class="col-sm-6">
+							<img class="camera-img"src="img/placeholder.png" />
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6">
-						<p class="teleop-status-text">shooter <span class="label label-success">ON<span></p>
-						<!-- <div class="onoffswitch">
-							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="shooter-onoffswitch" checked>
-							<label class="onoffswitch-label" for="myonoffswitch">
-								<span class="onoffswitch-inner"></span>
-								<span class="onoffswitch-switch"></span>
-							</label>
-						</div> -->
-					</div>
-					<div class="col-sm-6">
-						<p class="teleop-status-text">rope <span class="label label-danger">OFF</span></p>
-						<!-- <div class="onoffswitch">
-							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="rope-onoffswitch" checked>
-							<label class="onoffswitch-label" for="myonoffswitch">
-								<span class="onoffswitch-inner"></span>
-								<span class="onoffswitch-switch"></span>
-							</label>
-						</div> -->
+					<div class="row">
+						<div class="col-sm-6">
+							<p class="teleop-status-text">shooter <span id="shooter-status" class="label label-success">ON<span></p>
+						</div>
+						<div class="col-sm-6">
+							<p class="teleop-status-text">rope <span id="rope-status" class="label label-danger">OFF</span></p>
+						</div>
 					</div>
 				</div>
+				<!-- /.container-fluid -->
 			</div>
-		</div>
 		
-		<!-- Sensors tab -->
-		<div role="tabpanel" class="tab-pane active" id="sensors">
-			<div class="container-fluid">
-			
+			<!-- Parameters tab -->
+			<div id="params" class="tab-pane">
+				<div class="container-fluid">
+					<table class="table table-striped">
+						<!-- People who want their data displayed here, feel free to mess with this. -->
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>A</td>
+								<td>B</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+		
+			<!-- Control map tab -->
+			<div id="controls" class="tab-pane">
+				<div class="container-fluid">
+					
+				</div>
+				<!-- /.container-fluid -->
 			</div>
 		</div>
+		<!-- /.tab-content -->
 	</div>
+		
 </body>
