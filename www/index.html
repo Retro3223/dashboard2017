@@ -6,12 +6,17 @@
 	
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/my-css.css">
+	<link rel="stylesheet" type="text/css" href="css/camera.css">
 	<title>FRC 3223</title>
 </head>
 
 <body>
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/networktables.js"></script>
+	<script src="js/connectivity.js"></script>
+	<script src="js/tab_networktables.js"></script>
+	<script src="js/cameras.js"></script>
 	
 	<div class="container-fluid">
 		<!-- tabs -->
@@ -22,6 +27,9 @@
 			<li>
 				<a data-toggle="tab" href="#params">Parameters</a>
 			</li>
+            <li>
+				<a data-toggle="tab" href="#networktables">Networktables</a>
+            </li>
 			<li>
 				<a data-toggle="tab" href="#controls">Controls</a>
 			</li>
@@ -30,6 +38,16 @@
 		<div class="tab-content">
 			<!-- Teleop tab -->
 			<div id="teleop" class="tab-pane active">
+                <span class="connection-warning">
+                    <i class='glyphicon glyphicon-alert'></i>
+                    Dashboard not connected. 
+                    <br>
+                </span>
+                <span class="robot-connection-warning">
+                    <i class='glyphicon glyphicon-alert'></i>
+                    Robot not connected. 
+                </span>
+                <hr/>
 				<div class="container-fluid text-center">
 					<div class="row">
 						<!-- TODO: update span to reflect which controller is currently controlling robot -->
@@ -37,10 +55,28 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-6">
-							<img class="camera-img" src="img/placeholder.png" />
+                            <div id="webcam0_stream" class="camera"> 
+                                <img class="no-signal" src="img/placeholder.png" />
+                            </div>
+
+                                <select id='leftFrameCamera'>
+                                    <option value="front">Front</option>
+                                    <option value="back">Back</option>
+                                    <option value="structure">Structure</option>
+                                    <option value="none">None</option>
+                                </select>
 						</div>
 						<div class="col-sm-6">
-							<img class="camera-img"src="img/placeholder.png" />
+                            <div id="webcam1_stream" class="camera">
+                                <img class="no-signal" src="img/placeholder.png" />
+                            </div>
+
+                                <select id='rightFrameCamera'>
+                                    <option value="front">Front</option>
+                                    <option value="back">Back</option>
+                                    <option value="structure">Structure</option>
+                                    <option value="none">None</option>
+                                </select>
 						</div>
 					</div>
 					<div class="row">
@@ -84,16 +120,72 @@
 				</div>
 				<!-- /.container-fluid -->
 			</div>
-		
-			<!-- Control map tab -->
-			<div id="controls" class="tab-pane">
-				<div class="container-fluid">
-					
-				</div>
-				<!-- /.container-fluid -->
-			</div>
-		</div>
-		<!-- /.tab-content -->
-	</div>
-		
-</body>
+            
+            <div role="tabpanel" class="tab-pane" id="networktables">
+
+
+                <div>
+                    <select id="ChartSelect">
+                        <option value="">None</option>
+                        <option value="angle" selected>NavX angle</option>
+                        <option value="yaw">NavX yaw</option>
+                        <option value="roll">NavX roll</option>
+                        <option value="pitch">NavX pitch</option>
+                        <option value="accel_x">NavX Acceleration X</option>
+                        <option value="accel_y">NavX Acceleration Y</option>
+                        <option value="accel_z">NavX Acceleration Z</option>
+                        <option value="velocity_x">NavX Velocity X</option>
+                        <option value="velocity_y">NavX Velocity Y</option>
+                        <option value="velocity_z">NavX Velocity Z</option>
+                        <option value="pos_x">NavX Displacement X</option>
+                        <option value="pos_y">NavX Displacement Y</option>
+                        <option value="pos_z">NavX Displacement Z</option>
+                        <option value="fused_heading">NavX Fused Heading</option>
+                        <option value="raw_shooter_angle">Shooter angle (raw)</option>
+                        <option value="shooter_pitch">Shooter angle (compensated)</option>
+                    </select>
+                    <span id="ChartedValue"></span>
+                </div>
+                <div id="chart">
+                </div>
+
+                <table id="joystick_vars" class="table table-hover">
+                    <tbody>
+                    <p>Joystick</p>
+                    </tbody>
+                </table>
+                <table id="sensor_vars" class="table table-hover">
+                    <tbody>
+                    <p>Sensor</p>
+                    </tbody>
+                </table>
+                <table id="record_vars" class="table table-hover">
+                    <tbody>
+                    <p>Record</p>
+                    </tbody>
+                </table>
+                <table id="parameter_vars" class="table table-hover">
+                    <tbody>
+                    <p>Parameters</p>
+                    </tbody>
+                </table>
+                <table id="nt" class="table table-hover">
+                    <tbody>
+                    <p>Network</p>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Control map tab -->
+            <div id="controls" class="tab-pane">
+                <div class="container-fluid">
+
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+        </div>
+        <!-- /.tab-content -->
+    </div>
+
+    </body>
+</html>
