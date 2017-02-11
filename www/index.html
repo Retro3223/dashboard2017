@@ -18,7 +18,7 @@
 	<script src="js/tab_networktables.js"></script>
 	<script src="js/cameras.js"></script>
 	<script src="js/smoothie.js"></script>
-	<script src="js/example.js"></script>
+	<script src="js/charts.js"></script>
 	
 	<div class="container-fluid">
 		<!-- tabs -->
@@ -32,6 +32,9 @@
             <li>
 				<a data-toggle="tab" href="#networktables">Networktables</a>
             </li>
+			<li>
+				<a data-toggle="tab" href="#charts">Charts</a>
+			</li>
 			<li>
 				<a data-toggle="tab" href="#controls">Controls</a>
 			</li>
@@ -178,9 +181,23 @@
                 </table>
             </div>
 
+			<div id="charts" class="tab-pane">
+				<div class="container-fluid">
+					<div class="row">Dashboard</div>
+					<div class="row">
+						<canvas id="usage_client_dashboard_reads" width="400" height="100"></canvas>
+						Reads
+					</div>
+					<div class="row">
+						<canvas id="usage_client_dashboard_kpbs" width="400" height="100"></canvas>
+						Kpbs
+					</div>
+				</div>
+			</div>
+			
             <!-- Control map tab -->
             <div id="controls" class="tab-pane">
-                <canvas id="mycanvas" width="400" height="100"></canvas>
+                
             </div>
         </div>
         <!-- /.tab-content -->
