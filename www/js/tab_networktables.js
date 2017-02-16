@@ -4,14 +4,18 @@
             //console.info('onValueChanged', key, value, isNew);
             var table = '#nt > tbody:last';
 
-            var joystickKeys = ["right_", "left_"];
+            var recordKeys = ["pid error", "velocity expected", "encoder rate", "toggled", "pid setpoint"];
 
-            var sensorKeys = [ "seesHighGoal", "xOffsetHighGoal", "zOffsetHighGoal", "thetaHighGoal", ];
+            var sensorKeys = [ 
+                "seesHighGoal", "xOffsetHighGoal", "zOffsetHighGoal", 
+                "thetaHighGoal", 
+                "seesLift", "xOffsetLift", "zOffsetLift", "thetaLift", "psiLift"
+            ];
 
-            var recordKeys = ["recordMode", "recordName", "recordStatus", "recording"];
 
             var parameterKeys = [];
 
+            var joystickKeys = [];
             for (var i = 0; i < joystickKeys.length; i++) {
                 for (var j = 0; j <= 12; j++) {
                     if (key === "/SmartDashboard/" + joystickKeys[i] + j) {

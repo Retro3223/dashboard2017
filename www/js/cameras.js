@@ -115,7 +115,7 @@ var frameR = new CameraFrame({
     noSignal: "/img/indianback.png",
 });
 
-var piurl = "http://cheesypi.local";
+var piurl = "http://marschmahlo.local";
 
 var frontCamera = new Camera({
     url: piurl + ":5803/?action=snapshot",
@@ -130,7 +130,7 @@ var altCamera = new Camera({
 });
 
 var structureCamera = new Camera({
-    url: piurl + "5802/?action=snapshot",
+    url: piurl + ":5802/?action=snapshot",
     singleImage: false,
 	nextCamera: null
 });
