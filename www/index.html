@@ -7,6 +7,15 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/my-css.css">
 	<link rel="stylesheet" type="text/css" href="css/camera.css">
+    <style>
+        .coord-display {
+            position: fixed;
+            width: 90px;
+            height: 25px;
+            background-color: blue;
+            color: white;
+        }
+    </style>
 	<title>FRC 3223</title>
 </head>
 
@@ -199,6 +208,8 @@
 			
             <!-- Control map tab -->
             <div id="controls" class="tab-pane">
+                <div id='xyreporter' class='coord-display'>
+                </div>
 				<div id="controller">
 					
 				</div>
