@@ -8,7 +8,7 @@
 
             var sensorKeys = [ 
                 "seesHighGoal", "xOffsetHighGoal", "zOffsetHighGoal", 
-                "thetaHighGoal", 
+                "thetaHighGoal", "Sees Lift", "xOffset Lift",
                 "seesLift", "xOffsetLift", "zOffsetLift", "thetaLift", "psiLift"
             ];
 
