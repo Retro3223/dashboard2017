@@ -115,35 +115,43 @@ var frameR = new CameraFrame({
     noSignal: "/img/indianback.png",
 });
 
-var piurl = "http://marschmahlo.local";
+var piurl = "http://marschmahlo";
 
-var frontCamera = new Camera({
-    url: piurl + ":5803/?action=snapshot",
-    singleImage: false,
-	nextCamera: null
-});
+var frontCamera;
 
-var altCamera = new Camera({
-    url: piurl + ":5800/?action=snapshot",
-    singleImage: false,
-	nextCamera: null
-});
+var altCamera;
 
-var structureCamera = new Camera({
-    url: piurl + ":5802/?action=snapshot",
-    singleImage: false,
-	nextCamera: null
-});
+var structureCamera;
 
-var nullCamera = new Camera({
-    url: "/img/indianfront.png",
-    singleImage: true,
-	nextCamera: null
-});
+var nullCamera;
 
-var structureMode = 5;
+var structureMode = 8;
 
-$(function() {
+function initCameras() {
+    frontCamera = new Camera({
+        url: piurl + ":5803/?action=snapshot",
+        singleImage: false,
+        nextCamera: null
+    });
+
+    altCamera = new Camera({
+        url: piurl + ":5800/?action=snapshot",
+        singleImage: false,
+        nextCamera: null
+    });
+
+    structureCamera = new Camera({
+        url: piurl + ":5802/?action=snapshot",
+        singleImage: false,
+        nextCamera: null
+    });
+
+    nullCamera = new Camera({
+        url: "/img/indianfront.png",
+        singleImage: true,
+        nextCamera: null
+    });
+
 	frontCamera.nextCamera = altCamera;
 	altCamera.nextCamera = structureCamera;
 	structureCamera.nextCamera = nullCamera;
@@ -215,6 +223,19 @@ $(function() {
        }
        NetworkTables.putValue("/SmartDashboard/structureMode", structureMode);
    });
+}
+
+$(function() {
+    $.ajax({
+        url: "/piurl", 
+        success: function(response) {
+            piurl = response;
+            initCameras();
+        },
+        error: function(errorResponse) {
+            initCameras();
+        }
+    });
 });
 
 

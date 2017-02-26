@@ -8,6 +8,8 @@
     http://localhost:8888/ to view the index.html page.
 '''
 
+import os
+import platform
 from os.path import abspath, dirname, exists, join
 from optparse import OptionParser
 
@@ -32,6 +34,34 @@ def init_networktables(ipaddr):
     logger.info("Networktables Initialized")
 
 
+def can_ping(hostname):
+    num_flag = "c"
+    if platform.system().lower() == "windows":
+        num_flag = "n"
+    return os.system("ping -%s 1 %s" % (num_flag, hostname)) == 0
+
+def find_roborio():
+    possible_hosts = [
+        "roborio-3223-frc.local",
+        "roborio-3223-frc",
+        "roborio-3223-frc.frc-robot.local",
+        "roborio-3223-frc.frc-robot"
+    ]
+    for host in possible_hosts:
+        if can_ping(host):
+            return host
+    return possible_hosts[0]
+
+def find_raspi():
+    possible_hosts = [
+        "marschmahlo.local",
+        "marschmahlo",
+    ]
+    for host in possible_hosts:
+        if can_ping(host):
+            return host
+    return possible_hosts[0]
+
 if __name__ == '__main__':
 
     # Setup options here
@@ -43,8 +73,11 @@ if __name__ == '__main__':
     parser.add_option('-v', '--verbose', default=False, action='store_true',
                       help='Enable verbose logging')
 
-    parser.add_option('--robot', default='roborio-3223-frc.local',
+    parser.add_option('--robot', default="find_roborio",
                       help="Robot's IP address")
+
+    parser.add_option('--raspi', default="find_raspi",
+                      help="Raspberry PI's IP address")
 
     options, args = parser.parse_args()
 
@@ -54,6 +87,16 @@ if __name__ == '__main__':
                         level=logging.DEBUG if options.verbose else logging.INFO)
 
     # Setup NetworkTables
+    if options.robot == "find_roborio":
+        print ("Searching for roborio")
+        options.robot = find_roborio()
+
+    if options.raspi == "find_raspi":
+        print ("Searching for raspberry pi")
+        options.raspi = find_raspi()
+
+    pi_url = options.raspi
+
     init_networktables(options.robot)
 
     # setup tornado application with static handler + networktables support
@@ -67,8 +110,13 @@ if __name__ == '__main__':
     if not exists(index_html):
         logger.warn("%s not found" % index_html)
 
+    class PiUrlHandler(tornado.web.RequestHandler):
+        def get(self):
+            self.write("http://" + pi_url)
+
     app = tornado.web.Application(
         get_handlers() + [
+            (r"/piurl", PiUrlHandler),
             (r"/()", NonCachingStaticFileHandler, {"path": index_html}),
             (r"/(.*)", NonCachingStaticFileHandler, {"path": www_dir})
         ]

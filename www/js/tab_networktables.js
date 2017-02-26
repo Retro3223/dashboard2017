@@ -4,7 +4,7 @@
             //console.info('onValueChanged', key, value, isNew);
             var table = '#nt > tbody:last';
 
-            var recordKeys = ["pid error", "velocity expected", "encoder rate", "toggled", "pid setpoint"];
+            var recordKeys = ["servoAngle"];
 
             var sensorKeys = [ 
                 "seesHighGoal", "xOffsetHighGoal", "zOffsetHighGoal", 

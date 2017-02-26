@@ -14,9 +14,9 @@ reads.addTimeSeries(reads_line);
 
 function onValueChanged(key, value, isNew) {
 	console.info(key, value);
-	if (key.startsWith("/Usage/Client/Dashboard/Kbps")) {
+	if (key.startsWith("/SmartDashboard/XAccel")) {
 		kpbs.append(new Date().getTime(), value);
-	} else if (key.startsWith("/Usage/Client/Dashboard/Reads")) {
+	} else if (key.startsWith("/SmartDashboard/YAccel")) {
 		reads.append(new Date().getTime(), value);
 	}
 }

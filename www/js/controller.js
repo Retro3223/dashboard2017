@@ -17,6 +17,16 @@ $(function drawRect() {
         return s;
     }
 
+    var pointHelperHidden = true;
+    function displayPointHelper() {
+        if(pointHelperHidden) {
+            $("#xyreporter").hide();
+        }else{
+            $("#xyreporter").show();
+        }
+    }
+    displayPointHelper();
+
     function onMouseMove(_event) {
         var canvas = document.getElementById('controller');
         var origin = getOffsetTopLeft(canvas);
@@ -27,6 +37,12 @@ $(function drawRect() {
     }
     var canvas = document.getElementById("controller");
     canvas.addEventListener('mousemove', onMouseMove);
+    document.addEventListener("keydown", function(_evt) {
+        if(_evt.key == "p") {
+            pointHelperHidden = !pointHelperHidden;
+            displayPointHelper();
+        }
+    });
 
     var draw = SVG('controller').size("100%", 700);
     var image = draw.image("img/controller.jpg").move(100, 0);
@@ -36,7 +52,7 @@ $(function drawRect() {
         color: "skyblue",
         width: 2
     });
-	
+
 	var right_bumper_text = draw.text("PLACEHOLDER").move(560, 17);
     var right_bumper_line = draw.line(435, 32, 550, 25).stroke({
         color: "skyblue",
@@ -97,9 +113,56 @@ $(function drawRect() {
         width: 2
     });
 	
-	var a_button_text = draw.text("PLACEHOLDER").move(560, 128);
-    var a_button_line = draw.line(405, 87, 550, 132).stroke({
+	var x_button_text = draw.text("PLACEHOLDER").move(560, 128);
+    var x_button_line = draw.line(405, 87, 550, 132).stroke({
         color: "skyblue",
         width: 2
     });
+
+    function togglePressed(elt, isPressed) {
+        if (isPressed) {
+            elt.fill("red");
+        }else {
+            elt.fill("black");
+        }
+    }
+    var onValueChanged = function(key, value, isNew) {
+        var pressMap = {
+            "/SmartDashboard/A Pressed": a_button_text,
+            "/SmartDashboard/B Pressed": b_button_text,
+            "/SmartDashboard/X Pressed": x_button_text,
+            "/SmartDashboard/Y Pressed": y_button_text,
+            "/SmartDashboard/Left Bumper Pressed": left_bumper_text,
+            "/SmartDashboard/Right Bumper Pressed": right_bumper_text,
+            "/SmartDashboard/Right DPAD Pressed": d_pad_right_text,
+            "/SmartDashboard/Left DPAD Pressed": d_pad_left_text,
+            "/SmartDashboard/Up DPAD Pressed": d_pad_up_text,
+            "/SmartDashboard/Down DPAD Pressed": d_pad_down_text,
+            "/SmartDashboard/Left Stick Pressed": left_stick_text,
+            "/SmartDashboard/Right Stick Pressed": right_stick_text,
+        };
+        var textMap = {
+            "/SmartDashboard/A Text": a_button_text,
+            "/SmartDashboard/B Text": b_button_text,
+            "/SmartDashboard/X Text": x_button_text,
+            "/SmartDashboard/Y Text": y_button_text,
+            "/SmartDashboard/Left Bumper Text": left_bumper_text,
+            "/SmartDashboard/Right Bumper Text": right_bumper_text,
+            "/SmartDashboard/Right DPAD Text": d_pad_right_text,
+            "/SmartDashboard/Left DPAD Text": d_pad_left_text,
+            "/SmartDashboard/Up DPAD Text": d_pad_up_text,
+            "/SmartDashboard/Down DPAD Text": d_pad_down_text,
+            "/SmartDashboard/Left Stick Text": left_stick_text,
+            "/SmartDashboard/Right Stick Text": right_stick_text,
+        };
+        if(key in pressMap) {
+            togglePressed(pressMap[key], value);
+        }
+        if(key in textMap) {
+            var textElement = textMap[key];
+            textElement.text(value);
+        }
+    }
+
+    NetworkTables.addGlobalListener(onValueChanged, true);
 });
