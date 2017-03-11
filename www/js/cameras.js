@@ -116,6 +116,7 @@ var frameR = new CameraFrame({
 });
 
 var piurl = "http://marschmahlo";
+var rio_url = "http://roborio-3223-frc.local";
 
 var frontCamera;
 
@@ -129,7 +130,7 @@ var structureMode = 8;
 
 function initCameras() {
     frontCamera = new Camera({
-        url: piurl + ":5803/?action=snapshot",
+        url: rio_url + ":5800/?action=snapshot",
         singleImage: false,
         nextCamera: null
     });
@@ -229,7 +230,12 @@ $(function() {
     $.ajax({
         url: "/piurl", 
         success: function(response) {
-            piurl = response;
+			console.info("repno", response);
+			response = JSON.parse(response);
+            piurl = response.pi;
+			rio_url = response.rio;
+			console.info("rio: ", rio_url);
+			console.info("piurl:" , piurl);
             initCameras();
         },
         error: function(errorResponse) {

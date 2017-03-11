@@ -12,6 +12,7 @@ import os
 import platform
 from os.path import abspath, dirname, exists, join
 from optparse import OptionParser
+import json 
 
 import tornado.web
 from tornado.ioloop import IOLoop
@@ -47,6 +48,8 @@ def find_roborio():
         "roborio-3223-frc.frc-robot.local",
         "roborio-3223-frc.frc-robot"
     ]
+    for i in range(1, 10):
+        possible_hosts.append("roborio-3223-frc-%s.local" % i)
     for host in possible_hosts:
         if can_ping(host):
             return host
@@ -73,10 +76,10 @@ if __name__ == '__main__':
     parser.add_option('-v', '--verbose', default=False, action='store_true',
                       help='Enable verbose logging')
 
-    parser.add_option('--robot', default="find_roborio",
+    parser.add_option('--robot', default="10.32.23.2",
                       help="Robot's IP address")
 
-    parser.add_option('--raspi', default="find_raspi",
+    parser.add_option('--raspi', default="10.32.23.6",
                       help="Raspberry PI's IP address")
 
     options, args = parser.parse_args()
@@ -96,6 +99,7 @@ if __name__ == '__main__':
         options.raspi = find_raspi()
 
     pi_url = options.raspi
+    rio_url = options.robot 
 
     init_networktables(options.robot)
 
@@ -112,7 +116,7 @@ if __name__ == '__main__':
 
     class PiUrlHandler(tornado.web.RequestHandler):
         def get(self):
-            self.write("http://" + pi_url)
+            self.write(json.dumps({"pi": "http://" + pi_url, "rio": "http://" + rio_url}))
 
     app = tornado.web.Application(
         get_handlers() + [
