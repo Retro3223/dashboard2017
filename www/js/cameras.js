@@ -130,8 +130,9 @@ var structureMode = 8;
 
 function initCameras() {
     frontCamera = new Camera({
-        url: rio_url + ":5800/?action=snapshot",
-        singleImage: false,
+        //url: rio_url + ":5800/?action=snapshot",
+		url: piurl + ":5803/?action=snapshot",
+		singleImage: false,
         nextCamera: null
     });
 
