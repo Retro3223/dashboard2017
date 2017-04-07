@@ -67,6 +67,9 @@ function autoListener(key, value, isNew) {
         autonomousMode = value;
         selectAutonomousOption();
     }
+    if(key === "/SmartDashboard/javaAutoMode") {
+        $("#javaAutoMode").text(value);
+    }
 }
 
 // when dashboard connects, robot connects, user selects option, then option 

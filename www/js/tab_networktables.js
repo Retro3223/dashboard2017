@@ -4,7 +4,7 @@
             //console.info('onValueChanged', key, value, isNew);
             var table = '#nt > tbody:last';
 
-            var recordKeys = ["servoAngle"];
+            var autoKeys = ["autonomousMode", "javaAutoMode"];
 
             var sensorKeys = [ 
                 "seesHighGoal", "xOffsetHighGoal", "zOffsetHighGoal", 
@@ -30,9 +30,9 @@
                 }
             }
 
-            for (var i = 0; i < recordKeys.length; i++) {
-                if (key === "/SmartDashboard/" + recordKeys[i]) {
-                    table = '#record_vars > tbody:last';
+            for (var i = 0; i < autoKeys.length; i++) {
+                if (key === "/SmartDashboard/" + autoKeys[i]) {
+                    table = '#auto_vars > tbody:last';
                 }
             }
 
